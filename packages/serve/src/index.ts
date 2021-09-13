@@ -186,7 +186,7 @@ class ServeCommand {
         const usedPorts = [];
 
         for (const compilerForDevServer of compilersForDevServer) {
-          let devServerOptions: devServerOptionsType;
+          let devServerOptions: devServerOptionsType | false;
 
           if (isNewDevServerCLIAPI) {
             const args = devServerFlags.reduce((accumulator, flag) => {
@@ -267,6 +267,10 @@ class ServeCommand {
             );
           }
 
+          if (devServerOptions === false) {
+            continue;
+          }
+
           // TODO remove in the next major release
           if (!isDevServer4) {
             const getPublicPathOption = (): string => {
@@ -277,7 +281,7 @@ class ServeCommand {
                 return normalizePublicPath(compilerForDevServer.options.output.publicPath);
               }
 
-              if (devServerOptions.publicPath) {
+              if (devServerOptions !== false && devServerOptions.publicPath) {
                 return normalizePublicPath(devServerOptions.publicPath);
               }
 
@@ -288,7 +292,7 @@ class ServeCommand {
                 return options.stats;
               }
 
-              if (devServerOptions.stats) {
+              if (devServerOptions !== false && devServerOptions.stats) {
                 return devServerOptions.stats;
               }
 
