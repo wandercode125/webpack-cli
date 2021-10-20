@@ -1,5 +1,5 @@
 // eslint-disable-next-line node/no-unpublished-require
-const { run, isWebpack5 } = require("../../../utils/test-utils");
+const { run } = require("../../../utils/test-utils");
 const { existsSync } = require("fs");
 const { resolve } = require("path");
 
@@ -13,9 +13,8 @@ describe("webpack cli", () => {
       return;
     }
 
-    if (isMacOS && !isWebpack5) {
+    if (isMacOS) {
       expect(true).toBe(true);
-
       return;
     }
 
